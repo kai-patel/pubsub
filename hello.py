@@ -91,16 +91,14 @@ class Subscriber:
 
 async def main():
     async with Connection() as connection:
-        # subscriber = Subscriber(connection)
         await connection.connect("127.0.0.1", "4444")
         async with Subscriber(connection) as subscriber:
-            # subscriber_loop = asyncio.create_task(subscriber.consume())
 
             async def foo(wait: int):
                 await subscriber.send_something(str(wait))
 
             asyncio.gather(*[foo(i) for i in range(5)])
-        # await subscriber_loop
+            return
 
 
 if __name__ == "__main__":
